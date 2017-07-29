@@ -1,0 +1,119 @@
+﻿
+@{
+    Layout = null;
+    Book.Model.T_Stock_InHead head = ViewBag.head;
+    List<Book.Model.T_Stock_InItems> items = ViewBag.items;
+}
+
+<h2 class="contentTitle">入库单修改</h2>
+<form action="/StockIn/editsave" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+    <div class="pageContent">
+        <div class="pageFormContent" layoutH="97">
+
+            <dl class="nowrap">
+                <dt>时间：</dt>
+                <dd>
+                    <input type="hidden" id="HeadId" name="HeadId" value="@head.Id" />
+                    <input type="text" id="PYear" name="PYear" value="@head.CreateTime.ToShortDateString().ToString()" class="date textInput" datefmt="yyyy/MM/dd"/>
+                
+                </dd>
+            </dl>
+            <dl class="nowrap">
+                <dt>经手人</dt>
+                <dd>
+                    <input type="text" name="CreateUser" value="@head.Creater" id="CreateUser" />
+                </dd>
+            </dl>
+
+            <dl class="nowrap">
+                <dt>供应商</dt>
+                <dd>
+                    <input type="hidden" name="Provider.Id" value="@head.Provider.Id" id="Provider.Id" />
+                    <input type="text" name="Provider.Name" id="Provider.Name" value="@head.Provider.Name"
+                           lookupgroup="Provider"
+                           suggestfields="Name"
+                           suggesturl="/provider/GetAllProvider" />
+                </dd>
+            </dl>
+
+            <h3 class="contentTitle">入库单</h3>
+            <div class="tabs">
+                <div class="tabsHeader">
+                    <div class="tabsHeaderContent">
+                        <ul>
+                            <li class="selected"><a href="javascript:void(0)"><span>入库清单</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tabsContent" style="height: 150px;">
+                    <div>
+                        <table class="list nowrap itemDetail" addButton="编辑清单条目" width="100%">
+                            <thead>
+                                <tr>
+
+                                    <th type="lookup" name="items[#index#].book.Name"
+                                        lookupGroup="items[#index#].book"
+                                        suggestUrl="/book/getAll"
+                                        suggestFields="Name"
+                                        postField="keywords" size="12" fieldClass="required">书籍名称</th>
+                                    <th type="text" name="items[#index#].book.Id">书的编号</th>
+                                    <th type="text" name="items[#index#].book.Price" size="12" fieldClass="required">价格</th>
+                                    <th type="text" name="items[#index#].book.Version" size="12" fieldClass="required">版本</th>
+                                    <th type="text" name="items[#index#].book.Author" size="12" fieldClass="required">作者</th>
+
+                                    <th type="text" name="items[#index#].Amount" defaultVal="#index#" size="12" fieldClass="digits">数量</th>
+                                    <th type="text" name="items[#index#].Discount" defaultVal="#index#" size="12" fieldClass="number">折扣</th>
+                                    <th type="del" width="60">操作</th>
+                                    @*<th type="text" name="items[#index#].itemString" size="12" fieldClass="required" fieldAttrs="{remote:'validate_remote.html', maxlength:10}">从字符串</th>
+                                        <th type="text" name="items[#index#].itemInt" defaultVal="#index#" size="12" fieldClass="digits">从整数</th>
+                                        <th type="text" name="items[#index#].itemFloat" defaultVal="0.8" size="12" fieldClass="number">从浮点</th>
+                                        <th type="date" name="items[#index#].itemDate" defaultVal="2011-12-28" size="12">从日期</th>
+                                        <th type="date" format="yyyy-MM-dd HH:mm:ss" name="items[#index#].itemDataTime" size="16">从日期时间</th>
+                                        <th type="lookup" name="items[#index#].org.orgName" lookupGroup="items[#index#].org" lookupUrl="demo/database/dwzOrgLookup.html" suggestUrl="demo/database/db_lookupSuggest.html" suggestFields="orgName" postField="keywords" size="12" fieldClass="required">部门名称</th>
+                                        <th type="enum" name="items[#index#].itemEnum" enumUrl="demo/database/db_select.html" size="12">从枚举</th>
+                                        <th type="attach" name="items[#index#].attachment.fileName" lookupGroup="items[#index#].attachment" lookupUrl="demo/database/db_attachmentLookup.html" size="12">从附件</th>
+                                        <th type="del" width="60">操作</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int i = 0;
+                                }
+                                @foreach (Book.Model.T_Stock_InItems item in items)
+                                {
+                                    <tr class="unitBox">
+                                        <td>
+                                            @*<input type="hidden" name="items[@i].book.id" value="@item.Book.Id">*@
+                                            <input type="text" name="items[@i].book.Name" value="@item.Book.BookName" autocomplete="off" lookupgroup="items[@i].book" suggesturl="/book/getAll" suggestfields="Name" postfield="keywords" lookuppk="id" size="12" class="required textInput valid">
+                                            @*<a class="btnLook" href="" lookupgroup="items[@i].book" autocomplete="off" suggesturl="/book/getAll" suggestfields="Name" postfield="keywords" lookuppk="id" title="查找带回">查找带回</a>*@
+                                        </td>
+                                        <td>
+                                            <input type="text" name="items[@i].book.Id" value="@item.Book.Id" size="12" class="textInput">
+                                        </td>
+                                        <td><input type="text" name="items[@i].book.Price" value="@item.Book.Price" size="12" class="required textInput"></td>
+                                        <td><input type="text" name="items[@i].book.Version" value="@item.Book.Version" size="12" class="required textInput"></td>
+                                        <td><input type="text" name="items[@i].book.Author" value="@item.Book.Author" size="12" class="required textInput"></td>
+                                        <td><input type="text" name="items[@i].Amount" value="@item.Amount" size="12" class="digits textInput"></td>
+                                        <td><input type="text" name="items[@i].Discount" value="@item.Discount" size="12" class="number textInput"></td>
+                                        <td><a href="javascript:void(0)" class="btnDel ">删除</a></td>
+                                    </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tabsFooter">
+                    <div class="tabsFooterContent"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="formBar">
+            <ul>
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+                <li><div class="button"><div class="buttonContent"><button class="close" type="button">关闭</button></div></div></li>
+            </ul>
+        </div>
+    </div>
+</form>

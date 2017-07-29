@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
+
+namespace Book.DAL
+{
+    public partial class DalT_Base_Provider
+    {
+        public List<Book.Model.T_Base_Provider> GetModelListByPage(string strWhere, string orderby, int startIndex, int endIndex)
+
+        {
+            DataSet ds = GetListByPage(strWhere, orderby, startIndex, endIndex);
+            List<Book.Model.T_Base_Provider> list = new List<Model.T_Base_Provider>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                list.Add(DataRowToModel(dr));
+            }
+            return list;
+        }
+        public List<Book.Model.T_Base_Provider> GetModelList(string strWhere)
+        {
+            DataSet ds = GetList(strWhere);
+            List<Book.Model.T_Base_Provider> list = new List<Model.T_Base_Provider>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                list.Add(DataRowToModel(dr));
+            }
+            return list;
+        }
+    }
+}

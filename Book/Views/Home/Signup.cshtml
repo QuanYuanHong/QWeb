@@ -1,0 +1,213 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>书籍订购平台</title>
+    <script src="~/js/jquery-1.7.2.min.js"></script>
+    <link href="/themes/css/login.css" rel="stylesheet" type="text/css" />
+    <style>
+        .loginForm p {
+            height: 0px;
+        }
+
+        .login_bg {
+            display: block;
+            height: 270px;
+        }
+
+        .login_icon {
+            text-align: center;
+            height: 35px;
+        }
+
+            .login_icon img {
+                height: 20px;
+                width: 20px;
+            }
+
+            .login_icon input {
+                height: 25px;
+            }
+
+        .other_login {
+            float: right;
+            width: 200px;
+        }
+
+            .other_login img {
+                height: 25px;
+            }
+
+            .other_login li {
+                display: inline;
+            }
+
+        .login_other {
+            float: right;
+            padding: 5px 100px 0 0;
+        }
+        .signup_bar { padding-left:70px;}
+        .signup_bar .sub { display:block; width:75px; height:30px; border:none; background:url(/themes/default/images/signup_sub.png) no-repeat; cursor:pointer;}
+       
+    </style>
+</head>
+
+<body>
+    <div id="login">
+        <div id="login_header">
+            <h1 class="login_logo">
+                <a href="#"><img src="~/themes/default/images/login/bg_logo.png" /></a>
+            </h1>
+            <div class="login_headerContent">
+            </div>
+        </div>
+        <div id="login_content">
+            <div style="width:50px; float:right;color:red;padding-right:13em;"><h1><strong>@ViewBag.message</strong></h1></div>
+            <div class="loginForm">
+                <form action="/Home/SignupSave">
+                    <p>
+                        <!--<label>用户名：</label>-->
+                        <div class="login_icon">
+                            <img src="~/themes/default/images/login/person.png" />
+                            <input type="text" name="username" size="20" class="required login_input" placeholder="请输入用户名" />
+                        </div>
+
+                    </p>
+                    <p>
+                        <!--<label>密码：</label>-->
+                        <div class="login_icon">
+                            <img src="~/themes/default/images/login/password.png" />
+                            <input type="password" name="password" id="pwd1" size="20" class="login_input" placeholder="请输入密码" />
+                        </div>
+
+                    </p>
+                    <p>
+                        <!--<label>再次输入密码：</label>-->
+                        <div class="login_icon">
+                            <img src="~/themes/default/images/login/password.png" />
+                            <input type="password" name="password" id="pwd2" size="20" class="login_input" placeholder="确认密码" onkeyup="validate()" /><br /><span id="tishi"></span></input>
+                        </div>
+                    </p>
+                    <br />
+                    <p id="mima" style="color:red"></p>
+                    <br />
+                    <div class="signup_bar" style="position:relative">                        
+                        <input class="sub" id="submit" type="submit" value=""/>
+                        <div style="position:absolute;z-index:99;left:100px;top:15px;padding-left:60px;">
+                            <a href="/Home/login">返回登录</a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="login_bg"><img src="~/themes/default/images/login/bg.jpg" /></div>
+            <div class="login_main" style="padding-top: 10px;">
+                <p class="login_other">其他登录方式</p><br /><br />
+                <ul class="other_login">
+                    <li><a href="#"><img src="~/themes/default/images/login/qq.png" /></a></li>
+                    <li><a href="#"><img src="~/themes/default/images/login/wechat.png" /></a></li>
+                    <li><a href="#"><img src="~/themes/default/images/login/weibo.png" /></a></li>
+                    <li><a href="#"><img src="~/themes/default/images/login/alipay.png" /></a></li>
+                </ul>
+
+                <div class="login_inner">
+                    <p>您可以使用 网易网盘 ，随时存，随地取</p>
+                    <p>您还可以使用 闪电邮 在桌面随时提醒邮件到达，快速收发邮件。</p>
+                    <p>在 百宝箱 里您可以查星座，订机票，看小说，学做菜…</p>
+                </div>
+            </div>
+        </div>
+        <div id="login_footer">
+            Copyright &copy; 2009 www.dwzjs.com Inc. All Rights Reserved.
+        </div>
+    </div>
+    <script type="text/javascript">
+        function validate() {
+            var pwd1 = document.getElementById("pwd1").value;
+            var pwd2 = document.getElementById("pwd2").value;
+
+            if (pwd1.length >= 3) {
+                //对比两次输入的密码
+                if (pwd1 == pwd2) {
+                    document.getElementById("tishi").innerHTML = "<font color='green'>两次密码相同</font>";
+                    document.getElementById("submit").disabled = false;
+                }
+                else {
+                    document.getElementById("tishi").innerHTML = "<font color='red'>两次密码不相同</font>";
+                    document.getElementById("submit").disabled = true;
+                }
+            }
+            else {
+                document.getElementById("mima").textContent = "密码太短啦！";
+                document.getElementById("submit").disabled = true;
+            }
+
+        }
+    </script>
+</body>
+</html>
+
+@*<script type="text/javascript">
+            function addsend() {
+                var addpassword1 = $("#addpassword1").val();
+                var addpassword = $("#addpassword").val();
+                var addaccount = $("#addaccount").val();
+                $.post("/user/addCheck",
+                    {
+                        "addpassword1": addpassword1,
+                        "addpassword": addpassword,
+                        "addaccount": addaccount
+                    },
+                    function(data,status){
+                        if(data.code ==1)
+                        {
+                            location.href="/home/login"
+                        }
+                        else {
+                            window.alert(data.message);
+                        }
+                    })
+                }
+    </script>
+
+
+     public JsonResult AddCheck(string addaccount, string addpassword, string addpassword1)
+            {
+                DAl.DALT_Base_User dauser = new DAl.DALT_Base_User();
+                if (addaccount.Trim()=="")
+                {
+                    return Json(new { code = 3, message = "账号不能为空" });
+                }
+                else if(addpassword.Trim() == "" || addpassword1.Trim() == "")
+                {
+                    return Json(new { code = 4, message = "密码不能为空" });
+                }
+                else if (addpassword.Equals(addpassword1))
+                {
+                    //问题代码
+                    Model.T_Base_User user = new Model.T_Base_User();
+                    user.LoginName = addaccount;
+                    string PWD = FormsAuthentication.HashPasswordForStoringInConfigFile(addpassword, "MD5");
+                    user.Password = PWD; /*addpassword;*/
+                    bool result = dauser.Add(user);
+                    bool query = dauser.IsExist(addaccount, PWD);
+                    if (query)
+                    {
+                        return Json(new { code = 1, message = "注册成功" });
+                    }
+                    else
+                    {
+                        return Json(new { code = 0, message = "注册失败" });
+                    }
+                }
+                else
+                {
+                    return Json(new { code = 2, message = "密码不一致" });
+                }
+            }
+*@

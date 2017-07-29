@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<h2 class="contentTitle">入库单</h2>
+    <form method="post" action="/StockIN/AddSave" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <div class="pageContent">
+            <div class="pageFormContent" layoutH="97">
+
+                <dl class="nowrap">
+                    <dt>入库时间</dt>
+                    <dd>
+                        <input type="text" name="PYear" id="PYear" class="date textInput"  datefmt="yyyy/MM/dd"/>
+
+                    </dd>
+                </dl>
+                <dl class="nowrap">
+                    <dt>经手人</dt>
+                    <dd>
+                        <input type="text" name="StockCreater" id="StockCreater" />
+                    </dd>
+                </dl>
+                <dl class="nowrap">
+                    <dt>出版社</dt>
+                    <dd>
+                        <input type="hidden" name="Provider.Id" id="Provider.Id" />
+                        <input type="text" name="Provider.Name" id="Provider.Name" lookupGroup="Provider" suggestfields="Name" suggesturl="/provider/getallprovider" />
+                    </dd>
+                </dl>
+
+                <div class="divider"></div>
+                <h3 class="contentTitle">入库清单</h3>
+                <div class="tabs">
+                    <div class="tabsContent" style="height: 150px;">
+                        <div>
+                            <table class="list nowrap itemDetail" addButton="新建清单条目" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th type="lookup" name="items[#index#].book.Name" 
+                                            lookupGroup="items[#index#].book" suggestUrl="/Book/getAll" 
+                                            suggestfields="Name" postField="keywords" size="12" fieldClass="required">书籍名称</th>@*读取的是Book里存在的书目信息*@
+
+                                        <th type="text" name="items[#index#].book.Id" defaultVal="#index#" size="12" fieldClass="digits">书的编号</th>
+                                        <th type="text" name="items[#index#].book.Price" defaultVal="#index#" size="12" fieldClass="number">价格</th>
+                                        <th type="text" name="items[#index#].book.Version" defaultVal="#index#" size="12" fieldClass="digits">版本</th>
+                                        <th type="text" name="items[#index#].book.Author" defaultVal="#index#" size="12" fieldClass="required">作者</th>
+                                        <th type="text" name="items[#index#].Amount" defaultVal="#index#" size="12" fieldClass="digits">数量</th>
+                                        <th type="text" name="items[#index#].Discount" defaultVal="#index#" size="12" fieldClass="number">折扣</th>
+                                        <th type="del" width="60">操作</th>
+                                        @*<th type="text" name="items[#index#].itemString" size="12" fieldClass="required" fieldAttrs="{remote:'validate_remote.html', maxlength:10}">从字符串</th>
+                                            <th type="text" name="items[#index#].itemInt" defaultVal="#index#" size="12" fieldClass="digits">从整数</th>
+                                            <th type="text" name="items[#index#].itemFloat" defaultVal="0.8" size="12" fieldClass="number">从浮点</th>
+                                            <th type="date" name="items[#index#].itemDate" defaultVal="2011-12-28" size="12">从日期</th>
+                                            <th type="date" format="yyyy-MM-dd HH:mm:ss" name="items[#index#].itemDataTime" size="16">从日期时间</th>
+                                            <th type="lookup" name="items[#index#].org.orgName" lookupGroup="items[#index#].org" lookupUrl="demo/database/dwzOrgLookup.html" suggestUrl="demo/database/db_lookupSuggest.html" suggestFields="orgName" postField="keywords" size="12" fieldClass="required">部门名称</th>
+                                            <th type="enum" name="items[#index#].itemEnum" enumUrl="demo/database/db_select.html" size="12">从枚举</th>
+                                            <th type="attach" name="items[#index#].attachment.fileName" lookupGroup="items[#index#].attachment" lookupUrl="demo/database/db_attachmentLookup.html" size="12">从附件</th>
+                                            <th type="del" width="60">操作</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tabsFooter">
+                        <div class="tabsFooterContent"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="formBar">
+                <ul>
+                    <li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+                    <li><div class="button"><div class="buttonContent"><button class="close" type="button">关闭</button></div></div></li>
+                </ul>
+            </div>
+        </div>
+    </form>
+
+

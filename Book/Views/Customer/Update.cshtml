@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+    Book.Model.T_Base_Customer customer = ViewBag.customer;
+}
+
+<div class="pageContent">
+    <form method="post" action="/customer/updatesave" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <div class="pageFormContent" layoutH="56">
+            <p>
+                <input name="Id" type="hidden" size="30" value="@customer.Id" />
+                <label>客户名：</label>
+                <input name="Name" type="text" size="30" value="@customer.Name" />
+            </p>
+            <p>
+                <label>电话：</label>
+                <input name="Phone" type="text" size="30" value="@customer.Phone" />
+            </p>
+            <p>
+                <label>地址：</label>
+                <input name="Address" class="text" type="text" size="30" value="@customer.Address" />
+            </p>
+        </div>
+        <div class="formBar">
+            <ul>
+                <!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+                <li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+                <li>
+                    <div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>
+
