@@ -23,7 +23,7 @@ namespace Book.Web.Controllers
             }
 
             Book.DAL.DalT_Stock_InHead dal = new DAL.DalT_Stock_InHead();
-            //获取数据
+            //获取相关数据
             int PageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PageSize"]);
             int RecordCount = dal.GetRecordCount(where);
             int startIndex = (CurrentPageIndex - 1) * PageSize + 1;
